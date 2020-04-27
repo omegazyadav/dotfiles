@@ -1,0 +1,18 @@
+set from = "tuxomega1@gmail.com"
+set realname = "Yadav Lamichhane"
+set imap_user = "tuxomega1@gmail.com"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "imaps://imap.gmail.com/INBOX"
+set postponed ="+[Gmail]/Drafts"
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+set smtp_url = "smtps://tuxomega1@gmail.com@smtp.gmail.com:465/"
+set move = no
+set imap_keepalive = 9000
+set sort = reverse-date-received
+#set sort="threads"
+set strict_threads="yes"
+bind pager k previous-line
+bind pager j next-line
+source "gpg -d ~/.mutt/password.gpg |"

@@ -19,7 +19,7 @@ set incsearch
 set ignorecase
 
 set nocursorline
-set textwidth=80
+" set textwidth=80
 
 " Avoid relative number for cursor. 
 set norelativenumber
@@ -35,7 +35,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Persistent undo
+set undofile
+set undodir=~/.vim/undodir
 
-
-
+set clipboard=unnamedplus
 

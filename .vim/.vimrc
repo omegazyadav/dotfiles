@@ -39,5 +39,8 @@ set expandtab
 set undofile
 set undodir=~/.vim/undodir
 
+" This allows to yank contents to another file.
 set clipboard=unnamedplus
 
+" For groovy syntax.  
+au BufNewFile,BufRead Jenkinsfile setf groovy

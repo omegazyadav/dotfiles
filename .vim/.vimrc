@@ -44,3 +44,6 @@ set clipboard=unnamedplus
 
 " For groovy syntax.  
 au BufNewFile,BufRead Jenkinsfile setf groovy
+
+
+let g:indentLine_char = '┊'

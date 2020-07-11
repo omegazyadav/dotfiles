@@ -12,6 +12,12 @@ warning = 20.0
 alert = 10.0
 
 [[block]]
+block = "battery"
+device = "BAT1"
+interval = 1
+format = "{percentage}% {time}"
+
+[[block]]
 block = "memory"
 display_type = "memory"
 format_mem = "{Mup}%"
@@ -20,6 +26,7 @@ format_swap = "{SUp}%"
 [[block]]
 block = "cpu"
 interval = 1
+format = "{barchart} {utilization}% {frequency}GHz"
 
 [[block]]
 block = "load"
@@ -33,3 +40,14 @@ block = "sound"
 block = "time"
 interval = 60
 format = "%a %d/%m %R"
+
+[[block]]
+block = "backlight"
+device = "intel_backlight"
+
+
+[[block]]
+block = "music"
+player = "pulseaudio"
+buttons = ["play", "next"]
+

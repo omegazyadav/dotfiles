@@ -1,13 +1,22 @@
-set from = "tuxomega1@gmail.com"
-set realname = "Yadav Lamichhane"
+# .muttrc configuration
+# ================  IMAP ====================
 set imap_user = "tuxomega1@gmail.com"
 set folder = "imaps://imap.gmail.com:993"
 set spoolfile = "imaps://imap.gmail.com/INBOX"
-set postponed ="+[Gmail]/Drafts"
 set header_cache =~/.mutt/cache/headers
 set message_cachedir =~/.mutt/cache/bodies
 set certificate_file =~/.mutt/certificates
-set smtp_url = "smtps://tuxomega1@gmail.com@smtp.gmail.com:465/"
+set mbox = 'imaps://imap.gmail.com/[Gmail]/All Mail'
+set trash = 'imaps://imap.gmail.com/[Gmail]/Trash'
+set postponed = 'imaps://imap.gmail.com/[Gmail]/Drafts'
+set record = 'imaps://imap.gmail.com/[Gmail]/Sent Mail'
+source "gpg -d ~/.mutt/passwords.gpg |"
+
+# ================= SMTP =====================
+set smtp_url = "smtps://tuxomega1@gmail.com@smtp.gmail.com:587/"
+set ssl_force_tls = yes
+
+# ================ Basic Config ==============
 set move = no
 set imap_keepalive = 9000
 set sort = reverse-date-received
@@ -15,4 +24,15 @@ set sort = reverse-date-received
 set strict_threads="yes"
 bind pager k previous-line
 bind pager j next-line
-source "gpg -d ~/.mutt/password.gpg |"
+
+# ================  Composition  ====================
+set from = "tuxomega1@gmail.com"
+set realname = "Yadav Lamichhane"
+set editor = "vim"
+set edit_headers = yes
+set send_charset="us-ascii:utf-8"
+set charset = UTF-8
+set hostname="gmail.com"
+set use_from = yes
+
+

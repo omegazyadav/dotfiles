@@ -1,22 +1,26 @@
-# .muttrc configuration
+# .muttrc configuration 
 # ================  IMAP ====================
 set imap_user = "tuxomega1@gmail.com"
 set folder = "imaps://imap.gmail.com:993"
-set spoolfile = "imaps://imap.gmail.com/INBOX"
 set header_cache =~/.mutt/cache/headers
 set message_cachedir =~/.mutt/cache/bodies
 set certificate_file =~/.mutt/certificates
-set mbox = 'imaps://imap.gmail.com/[Gmail]/All Mail'
-set trash = 'imaps://imap.gmail.com/[Gmail]/Trash'
-set postponed = 'imaps://imap.gmail.com/[Gmail]/Drafts'
-set record = 'imaps://imap.gmail.com/[Gmail]/Sent Mail'
+
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set trash = "+Trash"
+set postponed = "+Drafts"
+
+mailboxes =INBOX =Sent =Trash =Drafts =Junk =Others
+
+# ==============Password===============
 source "gpg -d ~/.mutt/passwords.gpg |"
 
-# ================= SMTP =====================
-set smtp_url = "smtps://tuxomega1@gmail.com@smtp.gmail.com:587/"
+# ========================SMTP=====================
+set smtp_url = "smtp://tuxomega1@gmail.com@smtp.gmail.com:587/"
 set ssl_force_tls = yes
 
-# ================ Basic Config ==============
+# ========================
 set move = no
 set imap_keepalive = 9000
 set sort = reverse-date-received
@@ -29,10 +33,30 @@ bind pager j next-line
 set from = "tuxomega1@gmail.com"
 set realname = "Yadav Lamichhane"
 set editor = "vim"
-set edit_headers = yes
+set edit_headers = yes 
 set send_charset="us-ascii:utf-8"
-set charset = UTF-8
+set charset = UTF-8    
 set hostname="gmail.com"
 set use_from = yes
 
 
+# ==========Sidebar===============
+set sidebar_visible = yes
+set sidebar_width = 20
+set sidebar_short_path = yes
+set sidebar_next_new_wrap = yes
+set mail_check_stats
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/? %?S?%S?'
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager \Cp sidebar-prev-new
+bind index,pager \Cn sidebar-next-new
+bind index,pager B sidebar-toggle-visible
+
+
+
+# Sidebar Navigation
+bind index,pager <down> sidebar-next
+bind index,pager <up> sidebar-prev
+bind index,pager <right> sidebar-open

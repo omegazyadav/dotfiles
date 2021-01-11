@@ -55,5 +55,7 @@ set clipboard=unnamedplus
 " For groovy syntax.  
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
-
+" YAML syntax
+" https://github.com/chase/vim-ansible-yaml
+Bundle 'chase/vim-ansible-yaml'
 let g:indentLine_char = '┊'

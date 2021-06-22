@@ -12,8 +12,33 @@ warning = 20.0
 alert = 10.0
 
 [[block]]
+block = "uptime"
+
+#[[block]]
+#block = "weather"
+#format = "{weather} ({location}) {temp}, {wind} m/s {direction}"
+#service = { name = "openweathermap", api_key = "2b08d340ad0674717f2f15a22968d344", city_id = "1283240", units = "metric" }
+#
+#[[block]]
+#block = "xrandr"
+#icons = true
+#resolution = true
+#interval = 2
+
+#[[block]]
+#block = "temperature"
+#collapsed = false
+#interval = 10
+#format = "{min} min, {max} max, {average} avg"
+#chip = "*-isa-*"
+
+[[block]]
+block = "speedtest"
+interval = 5
+
+[[block]]
 block = "battery"
-device = "BAT1"
+#device = "BAT1"
 interval = 1
 format = "{percentage}% {time}"
 
@@ -22,11 +47,23 @@ block = "memory"
 display_type = "memory"
 format_mem = "{Mup}%"
 format_swap = "{SUp}%"
+icons = true
+clickable = true
+interval = 5
+warning_mem = 80
+warning_swap = 80
+critical_mem = 95
+critical_swap = 95
 
 [[block]]
 block = "cpu"
 interval = 1
 format = "{barchart} {utilization}% {frequency}GHz"
+
+#[[block]]
+#block = "custom"
+#command = "echo '\uf0ac ' `curl bot.whatismyipaddress.com`" # assumes fontawesome icons
+#interval = 60
 
 [[block]]
 block = "load"
@@ -35,6 +72,7 @@ format = "{1m}"
 
 [[block]]
 block = "sound"
+step_width = 3
 
 [[block]]
 block = "time"
@@ -45,9 +83,47 @@ format = "%a %d/%m %R"
 block = "backlight"
 device = "intel_backlight"
 
+#[[block]]
+#block = "music"
+#player = "spotify"
+#buttons = ["play", "next"]
+
+#[[block]]
+#block = "custom"
+#command = "echo \uf011" # assumes fontawesome icons
+#on_click = "systemctl `echo -e 'suspend\npoweroff\nreboot' | dmenu`"
+#interval = "once"
+
+#[[block]]
+#block = "custom"
+#command = "xrandr --listmonitors | tail -n+2 | tr '+' ' ' | cut -d' ' -f 4 | tr '\n' ' '"
+#interval = "once"
+#signal = 4
+
+#[[block]]
+#block = "maildir"
+#interval = 60
+#inboxes = ["/home/omega/mail/local","/home/omega/Mail", "/home/omega/mail/gmail/Inbox"]
+#threshold_warning = 1
+#threshold_critical = 10
+#display_type = "new"
+
+#[[block]]
+#block = "github"
+#format = "{total}|{author}|{comment}|{mention}|{review_requested}"
+
+#[[block]]
+#block = "custom"
+#command = "uname -r"
+#interval = "once"
 
 [[block]]
-block = "music"
-player = "pulseaudio"
-buttons = ["play", "next"]
+block = "docker"
+interval = 2
+format = "{running}/{total}"
+
+#[[block]]
+#block = "net"
+#device = "enp2s0"
+#interval = 5
 

@@ -3,15 +3,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call plug#begin()
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
 Plug 'dense-analysis/ale'
-Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Fuzzy Finder
@@ -21,7 +13,6 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Auto Completion Configuration
-autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
 let g:deoplete#enable_at_startup = 1
@@ -31,6 +22,12 @@ Plugin 'vim-plug'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'Yggdroot/indentLine'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'rdnetto/YCM-Generator'
+Plugin 'itchyny/lightline.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+
 call vundle#end()
 
 syntax enable
@@ -38,6 +35,8 @@ syntax on
 filetype plugin indent on
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
+
+let g:ycm_rust_src_path = "~/.rustup/rust"
 
 inoremap ii <Esc>
 inoremap " ""<left>
@@ -98,3 +97,6 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 " https://github.com/chase/vim-ansible-yaml
 Bundle 'chase/vim-ansible-yaml'
 let g:indentLine_char = '┊'
+
+" Set the status line in the vim
+set laststatus=2

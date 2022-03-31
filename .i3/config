@@ -210,3 +210,7 @@ bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
 bindsym --release Print exec gnome-screenshot
 bindsym --release Mod1+Sys_Req exec gnome-screenshot -w
 bindsym --release Shift+Print exec gnome-screenshot -a
+
+# Enable touchpad to work on the i3
+exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+

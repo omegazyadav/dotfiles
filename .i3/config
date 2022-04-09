@@ -214,3 +214,7 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 # Enable touchpad to work on the i3
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
+# Enable the Screeen and Lock icon in i3
+exec --no-startup-id nitrogen --set-auto /opt/wall/fedora.jpg --head=0
+exec --no-startup-id i3lock -i /opt/wall/fedora.png
+

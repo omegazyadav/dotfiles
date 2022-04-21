@@ -24,7 +24,7 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i /home/omega/.config/i3/wall/fedora.png --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -215,6 +215,6 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
 # Enable the Screeen and Lock icon in i3
-exec --no-startup-id nitrogen --set-auto /opt/wall/fedora.jpg --head=0
-exec --no-startup-id i3lock -i /opt/wall/fedora.png
+exec --no-startup-id nitrogen --set-auto /home/omega/.config/i3/wall/fedora.jpg --head=0
+exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
 

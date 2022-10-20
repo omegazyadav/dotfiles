@@ -218,3 +218,10 @@ exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 exec --no-startup-id nitrogen --set-auto /home/omega/.config/i3/wall/fedora.jpg --head=0
 exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
 
+# Open the specific program in dedicated workspace
+exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/gnome-terminal'
+exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/firefox'
+exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/gnome-terminal -- zsh -c 'mutt''
+exec --no-startup-id i3-msg 'workspace 4; exec /usr/bin/gnome-terminal -- zsh -c 'weechat''
+exec --no-startup-id i3-msg 'workspace 5; exec systemctl --user start docker-desktop'
+

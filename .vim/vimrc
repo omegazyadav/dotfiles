@@ -1,16 +1,24 @@
 set nocompatible
 filetype off
+set showcmd
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call plug#begin()
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'machakann/vim-highlightedyank'
 call plug#end()
+
+" Map SHIFT-f to open the files
+map <S-f> :Files<CR>
+nmap <leader>b; :Buffers<CR>
 
 " Auto Completion Configuration
 set completeopt=noinsert,menuone,noselect
@@ -27,7 +35,9 @@ Plugin 'rdnetto/YCM-Generator'
 Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-
+Plugin 'easymotion/vim-easymotion'
+Plugin 'rust-lang/rust.vim'
+Plugin 'rust-lang/rls'
 call vundle#end()
 
 syntax enable
@@ -100,3 +110,60 @@ let g:indentLine_char = '┊'
 
 " Set the status line in the vim
 set laststatus=2
+
+nnoremap Y "+y
+vnoremap Y "+y
+nnoremap yY ^"+y$
+set clipboard=unnamed
+
+" Go-VIM Specific
+filetype plugin indent on
+
+set autowrite
+
+" Go syntax highlighting
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+" Easymotion Key Bindings
+nmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f2)
+
+"s Auto formatting and importing
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+" Status line types/signatures
+let g:go_auto_type_info = 1
+
+" Run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" Map keys for most used commands.
+" Ex: `\b` for building, `\r` for running and `\b` for running test.
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+
+" NerdTree Config
+map <C-z> :NERDTreeToggle<CR> " Toggle side window with `CTRL+z`.
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeShowHidden=1 " Show hidden files
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+
+" Open hotkeys
+map <F-p> :Files<CR>
+

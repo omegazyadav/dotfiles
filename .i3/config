@@ -34,19 +34,12 @@ exec --no-startup-id nm-applet
 
 set $refresh_i3status killall -SIGUSR1 i3status
 
-#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec gnome-terminal
-
-
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -182,7 +175,9 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-     #   status_command i3status
+    tray_output primary
+    workspace_buttons yes
+    #   status_command i3status
     font pango:DejaVu Sans Mono, FontAwesome 12
     position bottom
     status_command /usr/bin/i3status-rs ~/.config/i3/status.toml
@@ -215,13 +210,14 @@ bindsym --release Shift+Print exec gnome-screenshot -a
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
 # Enable the Screeen and Lock icon in i3
-exec --no-startup-id nitrogen --set-auto /home/omega/.config/i3/wall/fedora.jpg --head=0
-exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
+#exec --no-startup-id nitrogen --set-auto /home/omega/.config/i3/wall/fedora.jpg --head=0
+bindsym Control+Mod1+l exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
 
 # Open the specific program in dedicated workspace
-exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/gnome-terminal'
-exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/firefox'
-exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/gnome-terminal -- zsh -c 'mutt''
-exec --no-startup-id i3-msg 'workspace 4; exec /usr/bin/gnome-terminal -- zsh -c 'weechat''
-exec --no-startup-id i3-msg 'workspace 5; exec systemctl --user start docker-desktop'
+exec_always --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
+
+exec_always --no-startup-id i3-msg 'workspace 5; exec /usr/bin/gnome-terminal -- zsh -c 'mutt''
+exec_always --no-startup-id i3-msg 'workspace 6; exec /usr/bin/gnome-terminal -- zsh -c 'weechat''
+
+exec_always --no-startup-id i3-msg 'workspace 7; exec /usr/bin/firefox'
 

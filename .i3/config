@@ -180,7 +180,6 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 
-    output DP-2
     output eDP-1
     separator_symbol ":|:"
     strip_workspace_numbers yes
@@ -188,8 +187,8 @@ bar {
 
     tray_output primary
     workspace_buttons yes
-    #   status_command i3status
-    font pango:DejaVu Sans Mono, FontAwesome 12
+    status_command i3status
+    font pango:DejaVu Sans Mono, FontAwesome 10
     position bottom
     status_command /usr/bin/i3status-rs ~/.config/i3/status.toml
     colors {
@@ -203,6 +202,51 @@ bar {
     }
 }
 
+bar {
+    output DP-2
+    strip_workspace_numbers yes
+    binding_mode_indicator yes
+
+    tray_output primary
+    workspace_buttons yes
+    font pango:DejaVu Sans Mono, FontAwesome 9
+    position bottom
+    status_command /usr/bin/i3status-rs ~/.config/i3/status-dp2.toml
+    colors {
+        separator #666666
+        background #222222
+        statusline #dddddd
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+    }
+}
+
+bar {
+
+    output DP-3
+    strip_workspace_numbers yes
+    binding_mode_indicator yes
+
+    workspace_buttons yes
+    #status_command i3status
+    font pango:DejaVu Sans Mono, FontAwesome 9
+    position bottom
+    status_command /usr/bin/i3status-rs ~/.config/i3/status-dp3.toml
+    colors {
+        separator #666666
+        background #000000
+        statusline #dddddd
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+    }
+}
+
+
+# bindsym $mod+t bar mode toggle
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
@@ -226,8 +270,10 @@ bindsym Control+Mod1+l exec --no-startup-id i3lock -i /home/omega/.config/i3/wal
 
 # Open the specific program in dedicated workspace
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
+exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
 
 exec --no-startup-id i3-msg 'workspace 5; exec /usr/bin/gnome-terminal -- zsh -c 'mutt''
 exec --no-startup-id i3-msg 'workspace 6; exec /usr/bin/gnome-terminal -- zsh -c 'weechat''
 
 exec --no-startup-id i3-msg 'workspace 7; exec /usr/bin/firefox'
+

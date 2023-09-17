@@ -1,0 +1,37 @@
+icons_format = "{icon}"
+
+[theme]
+theme = "solarized-dark"
+[theme.overrides]
+idle_bg = "#123456"
+idle_fg = "#abcdef"
+
+[icons]
+icons = "awesome4"
+[icons.overrides]
+bat = ["|E|", "|_|", "|=|", "|F|"]
+bat_charging = "|^| "
+
+[[block]]
+block = "weather"
+format = " $icon $weather ($location) $temp, $wind m/s $direction "
+[block.service]
+name = "openweathermap"
+api_key = "2b08d340ad0674717f2f15a22968d344"
+city_id = "1283240"
+units = "metric"
+
+[[block]]
+block = "custom"
+command = "echo 'Public IP:' `curl icanhazip.com`"
+interval = 60
+
+[[block]]
+block = "custom"
+command = "echo 'Private IP:' `hostname -I | awk '{print $1}' | tr -d '\r'`"
+interval = 60
+
+[[block]]
+block = "music"
+format = " $icon {$combo.str(max_w:20) $play $next |}"
+player = "spotify"

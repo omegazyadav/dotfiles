@@ -1,15 +1,25 @@
+icons_format = "{icon}"
+
+[theme]
 theme = "solarized-dark"
-icons = "awesome"
+[theme.overrides]
+idle_bg = "#123456"
+idle_fg = "#abcdef"
+
+[icons]
+icons = "awesome4"
+[icons.overrides]
+bat = ["|E|", "|_|", "|=|", "|F|"]
+bat_charging = "|^| "
 
 [[block]]
 block = "disk_space"
-path = "/"
-alias = "/"
 info_type = "available"
-unit = "GB"
-interval = 20
-warning = 20.0
+alert_unit = "GB"
 alert = 10.0
+warning = 15.0
+format = " $icon $available "
+format_alt = " $icon $available / $total "
 
 #[[block]]
 #block = "weather"
@@ -35,17 +45,11 @@ alert = 10.0
 
 [[block]]
 block = "memory"
-display_type = "memory"
-format_mem = "{Mup}%"
-format_swap = "{SUp}%"
-icons = true
-clickable = true
-interval = 5
-warning_mem = 80
-warning_swap = 80
-critical_mem = 95
-critical_swap = 95
-
+format = " $icon $mem_used_percents.eng(w:1) "
+format_alt = " $icon_swap $swap_free.eng(w:3,u:B,p:Mi)/$swap_total.eng(w:3,u:B,p:Mi)($swap_used_percents.eng(w:2)) "
+interval = 30
+warning_mem = 70
+critical_mem = 90
 
 #[[block]]
 #block = "custom"
@@ -54,8 +58,8 @@ critical_swap = 95
 
 [[block]]
 block = "load"
+format = " $icon 1min avg: $1m.eng(w:4) "
 interval = 1
-format = "{1m}"
 
 #[[block]]
 #block = "music"
@@ -89,17 +93,18 @@ format = "{1m}"
 [[block]]
 block = "docker"
 interval = 2
-format = "{running}/{total}"
+format = " $icon $running/$total "
 
-[[block]]
-block = "net"
-device = "wlp9s0"
-interval = 3
+#[[block]]
+#block = "net"
+#device = "wlp9s0"
+#interval = 3
 
 [[block]]
 block = "cpu"
 interval = 1
-format = "{barchart} {utilization}% {frequency}GHz"
+format = " $icon $barchart $utilization "
+format_alt = " $icon $frequency{ $boost|} "
 
 [[block]]
 block = "custom"
@@ -122,12 +127,34 @@ step_width = 3
 
 [[block]]
 block = "battery"
-#device = "BAT1"
-interval = 1
-format = "{percentage}% {time}"
+missing_format = ""
 
 [[block]]
 block = "time"
 interval = 60
-format = "%a %d/%m %R"
+[block.format]
+short = " $icon $timestamp.datetime(f:%R) "
+
+
+## Network Configuration
+
+#[[block]]
+#block = "net"
+#device = "wlp9s0"
+#interval = 3
+#
+#[[block]]
+#block = "net"
+#device = "wlp9s0"
+#format = " $icon {$signal_strength $ssid $frequency|Wired connection} via $device "
+#
+#[[block]]
+#block = "net"
+#device = "enp0s31f6"
+#interval = 3
+#
+#[[block]]
+#block = "net"
+#device = "enp0s31f6"
+#format = " $icon {$signal_strength $ssid $frequency|Wired connection} via $device "
 

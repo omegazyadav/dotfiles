@@ -24,7 +24,7 @@ format_alt = " $icon $available / $total "
 #[[block]]
 #block = "weather"
 #format = "{weather} ({location}) {temp}, {wind} m/s {direction}"
-#service = { name = "openweathermap", api_key = "2b08d340ad0674717f2f15a22968d344", city_id = "1283240", units = "metric" }
+#service = { name = "openweathermap", api_key = "XXXXXXXXXXXXXXX", city_id = "1283240", units = "metric" }
 #
 #[[block]]
 #block = "xrandr"

@@ -17,7 +17,7 @@ block = "weather"
 format = " $icon $weather ($location) $temp, $wind m/s $direction "
 [block.service]
 name = "openweathermap"
-api_key = "2b08d340ad0674717f2f15a22968d344"
+api_key = "XXXXXXXXXXXXXXXXXXXX"
 city_id = "1283240"
 units = "metric"
 

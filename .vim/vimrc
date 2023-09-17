@@ -1,13 +1,20 @@
+" Some useful commands and shortcuts
+"" Switch word to word
+"" w - Forward with one word
+"" b - Backward with one word
+" Delete the parenthesis i.e. (), {},[]
+"" ca[] or ca() or ca{}
+" Switch to the last closed file
+"" C-^ - Open the last closed file
+
 set nocompatible
 filetype off
 set showcmd
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call plug#begin()
-Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -20,7 +27,7 @@ call plug#end()
 map <S-f> :Files<CR>
 nmap <leader>b; :Buffers<CR>
 
-" Auto Completion Configuration
+" Auto Completion ConfiguratioN
 set completeopt=noinsert,menuone,noselect
 
 let g:deoplete#enable_at_startup = 1
@@ -42,11 +49,7 @@ call vundle#end()
 
 syntax enable
 syntax on
-filetype plugin indent on
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-
-let g:ycm_rust_src_path = "~/.rustup/rust"
 
 inoremap ii <Esc>
 inoremap " ""<left>
@@ -58,8 +61,10 @@ inoremap {<CR> {<CR>}<ESC>O
 inoremap (<CR> (<CR>)<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+" Delete between the two parentheis () {} [] with:
+" ca + () or [] or {}
 
+inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 
 set number
 set showcmd
@@ -68,10 +73,12 @@ set backspace=indent,eol,start
 set incsearch
 set ignorecase
 set hlsearch
+hi Search ctermbg=LightYellow
+hi Search ctermfg=Red
 
 " Search the trailing whitespaces with '/\s\+$'
-highlight RedundantSpaces ctermbg=red guibg=red
-match RedundantSpaces /\s\+$/
+ highlight RedundantSpaces ctermbg=red guibg=red
+ match RedundantSpaces /\s\+$/
 
 " Check Spelling with Specific Language
 " set spell spelllang=en_us
@@ -97,16 +104,13 @@ set expandtab
 " set undofile
 " set undodir=~/.vim/undodir
 
-" This allows to yank contents to another file.
-set clipboard=unnamedplus
-
 " For groovy syntax.
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
 " YAML syntax
 " https://github.com/chase/vim-ansible-yaml
 Bundle 'chase/vim-ansible-yaml'
-let g:indentLine_char = '┊'
+let g:indentLine_char = '¦'
 
 " Set the status line in the vim
 set laststatus=2
@@ -115,6 +119,7 @@ nnoremap Y "+y
 vnoremap Y "+y
 nnoremap yY ^"+y$
 set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Go-VIM Specific
 filetype plugin indent on
@@ -164,6 +169,35 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 
-" Open hotkeys
-map <F-p> :Files<CR>
+"Remove all trailing whitespace by pressing CTRL + Space
+nnoremap <C-@> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+" Extra Conf for YouCompleteMe
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_rust_src_path = "~/.rustup/rust"
+
+" Execute `cargo run` without leaving terminal
+map <C-x> :! clear && cargo run<CR>
+
+" Remove all trailing whitespace by pressing CTRL + Space
+nnoremap <C-@> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+" C Based config
+augroup project
+  autocmd!
+  autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+
+" add extra paths.
+let s:extpaths=expand("~/.vim.extpaths")
+if filereadable(s:extpaths)
+    execute "source ".s:extpaths
+endif
+
+" set path+=.,src/include,/usr/include,../../criu/include/common,include
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+
+hi Search guibg=peru guifg=wheat
+
 

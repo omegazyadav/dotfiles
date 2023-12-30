@@ -22,10 +22,6 @@ font pango:monospace 8
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i /home/omega/.config/i3/wall/fedora.png --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -44,6 +40,7 @@ floating_modifier $mod
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec alacritty
+#bindsym $mod+Return exec cool-retro-term
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -266,7 +263,10 @@ exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
 # Enable the Screeen and Lock icon in i3
 #exec --no-startup-id nitrogen --set-auto /home/omega/.config/i3/wall/fedora.jpg --head=0
-bindsym Control+Mod1+l exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
+#bindsym Control+Mod1+l exec --no-startup-id i3lock -i /home/omega/.config/i3/wall/fedora.png
+#exec_always --no-startup-id xautolock -time 1 -locker 'i3lock -i /home/omega/.config/i3/wall/fedora.png && sleep 5 && xset dpms force off ' &
+exec_always --no-startup-id  ~/.config/i3/scripts/lock
+exec_always --no-startup-id xss-lock -- ~/.config/i3/scripts/lid
 
 # Open the specific program in dedicated workspace
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
@@ -276,4 +276,3 @@ exec --no-startup-id i3-msg 'workspace 5; exec /usr/bin/gnome-terminal -- zsh -c
 exec --no-startup-id i3-msg 'workspace 6; exec /usr/bin/gnome-terminal -- zsh -c 'weechat''
 
 exec --no-startup-id i3-msg 'workspace 7; exec /usr/bin/firefox'
-

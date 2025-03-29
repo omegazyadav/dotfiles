@@ -1,14 +1,5 @@
-" Some useful commands and shortcuts
-"" Switch word to word
-"" w - Forward with one word
-"" b - Backward with one word
-" Delete the parenthesis i.e. (), {},[]
-"" ca[] or ca() or ca{}
-" Switch to the last closed file
-"" C-^ - Open the last closed file
-
 set nocompatible
-filetype off
+filetype plugin indent on
 set showcmd
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -19,8 +10,15 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'machakann/vim-highlightedyank'
+Plug 'mattn/vim-lsp-settings'
+Plug 'altercation/vim-colors-solarized'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'yami-beta/asyncomplete-omni.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvzone/showkeys'
 call plug#end()
 
 " Map SHIFT-f to open the files
@@ -33,12 +31,10 @@ set completeopt=noinsert,menuone,noselect
 let g:deoplete#enable_at_startup = 1
 
 call vundle#begin()
-Plugin 'vim-plug'
-Plugin 'VundleVim/Vundle.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'Yggdroot/indentLine'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'rdnetto/YCM-Generator'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'rdnetto/YCM-Generator'
 Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -50,10 +46,11 @@ call vundle#end()
 syntax enable
 syntax on
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd BufEnter * lcd %:p:h " Set the current directory when vim open a file
 
 inoremap ii <Esc>
-inoremap " ""<left>
-inoremap ' ''<left>
+" inoremap " ""<left>
+" inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
@@ -121,8 +118,6 @@ nnoremap yY ^"+y$
 set clipboard=unnamed
 set clipboard=unnamedplus
 
-" Go-VIM Specific
-filetype plugin indent on
 
 set autowrite
 
@@ -162,19 +157,29 @@ autocmd FileType go nmap <leader>t  <Plug>(go-test)
 
 " NerdTree Config
 map <C-z> :NERDTreeToggle<CR> " Toggle side window with `CTRL+z`.
+
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let NERDTreeShowHidden=1 " Show hidden files
 
-" Start NERDTree and leave the cursor in it.
-autocmd VimEnter * NERDTree
+"" Start NERDTree and leave the cursor in it.
+"autocmd VimEnter * NERDTree
 
-" Start NERDTree and put the cursor back in the other window.
-autocmd VimEnter * NERDTree | wincmd p
+"" Start NERDTree and put the cursor back in the other window.
+"autocmd VimEnter * NERDTree | wincmd p
 
-" Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"" Start NERDTree when Vim is started without file arguments.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+"" Start NERDTree. If a file is specified, move the cursor to its window.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+"
+"" Start NERDTree when Vim starts with a directory argument.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
@@ -184,8 +189,8 @@ let g:rustfmt_fail_silently = 0
 nnoremap <C-@> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 " Extra Conf for YouCompleteMe
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_rust_src_path = "~/.rustup/rust"
+"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+"let g:ycm_rust_src_path = "~/.rustup/rust"
 
 " Execute `cargo run` without leaving terminal
 map <C-x> :! clear && cargo run<CR>
@@ -205,8 +210,28 @@ if filereadable(s:extpaths)
     execute "source ".s:extpaths
 endif
 
-" set path+=.,src/include,/usr/include,../../criu/include/common,include
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
+set path+=.,src/include,/usr/include,../../criu/include/common,include
 
-hi Search guibg=peru guifg=wheat
+" Suggestion: show info for completion candidates in a popup menu
+if has("patch-8.1.1904")
+  set completeopt+=popup
+  set completepopup=align:menu,border:off,highlight:Pmenu
+endif
+
+function! Omni()
+    call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+                    \ 'name': 'omni',
+                    \ 'whitelist': ['go'],
+                    \ 'completor': function('asyncomplete#sources#omni#completor')
+                    \  }))
+endfunction
+
+au VimEnter * :call Omni()
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+
+"" Directories and everything under /src
+"let g:rooter_targets = ['/', '/src/*']
+

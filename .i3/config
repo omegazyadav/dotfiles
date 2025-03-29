@@ -292,3 +292,5 @@ exec --no-startup-id ~/.config/i3/scripts/workspaces
 # Open a Incognito window in Google Chrome
 bindsym $mod+n exec google-chrome -incognito
 
+# Switch sound sink with Ctrl+S
+bindsym $mod+Shift+s exec --no-startup-id /home/omega/Documents/src/scripts/pipewire/chaudio.sh
